@@ -28,6 +28,9 @@ end
 
 template = ERB.new(<<-EOF, 0, '>')
 #compdef heroku
+# generated from Heroku v<%= Heroku::VERSION + "\n" %>
+# with these plugins: <%= Heroku::Plugin.list.join(', ') + "\n" %>
+
 _heroku() {
 
 local -a app_argument
