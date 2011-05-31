@@ -20,7 +20,7 @@ Heroku::Command.load
 commands = Heroku::Command.commands#.select{|k,v| k[0] == 'a'}
 commands.each do |(_,cmd)|
    cmd.merge! safe_name: cmd[:command].gsub(':','\:')
-   #cmd.merge! summary: cmd[:summary].gsub(/'/,"") if cmd[:summary]
+   cmd.merge! cmd_arg: cmd[:banner].split(/\s/).size > 1
    cmd[:options].each do |opt|
      opt.last.merge! arg_string: argument_for_option(opt)
    end
@@ -49,6 +49,9 @@ _heroku-<%= name %>() {
   <% cmd[:options].each do |(_,opt)| %>
   <%= opt[:arg_string] %>
 
+  <% end %>
+  <% if cmd[:cmd_arg] %>
+  ':cmdarg:( )' \\
   <% end %>
   $app_argument && ret=0
 }
